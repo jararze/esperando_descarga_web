@@ -16,13 +16,14 @@ print("Flask app creada exitosamente")
 
 # Configuración
 app.config.update({
-    'SECRET_KEY': 'tu-clave-secreta',
-    'DB_HOST': 'localhost',
-    'DB_USER': 'root',
-    'DB_PASSWORD': 'Dali19((Kafka',
-    'API_TOKEN': 'bltrck2021_454fd3d',
-    'EXCEL_PATH': 'GEOCERCAS_CBN.xlsx',
-    'HISTORICAL_PATH': 'DataGrid.xlsx'
+    'SECRET_KEY': os.environ.get('SECRET_KEY', 'tu-clave-secreta-development'),
+    'DB_HOST': os.environ.get('DB_HOST', '159.203.123.109'),
+    'DB_USER': os.environ.get('DB_USER', 'hnsrqkzfpr'),
+    'DB_PASSWORD': os.environ.get('DB_PASSWORD', 'FdF6rJB6Ma'),
+    'DB_DATABASE': os.environ.get('DB_DATABASE', 'hnsrqkzfpr'),
+    'API_TOKEN': os.environ.get('API_TOKEN', 'bltrck2021_454fd3d'),
+    'EXCEL_PATH': os.environ.get('EXCEL_PATH', 'GEOCERCAS_CBN.xlsx'),
+    'HISTORICAL_PATH': os.environ.get('HISTORICAL_PATH', 'DataGrid.xlsx')
 })
 
 # Configurar logging
@@ -167,7 +168,7 @@ def init_complete_service():
                 'host': app.config['DB_HOST'],
                 'user': app.config['DB_USER'],
                 'password': app.config['DB_PASSWORD'],
-                'database': 'tms_historico',
+                'database': app.config['DB_DATABASE'],  # Usar la misma BD o crear otra
                 'charset': 'utf8mb4'
             },
             'api': {
@@ -3499,8 +3500,10 @@ if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
     debug = os.environ.get('FLASK_ENV') != 'production'
 
-    print(f"Iniciando servidor en puerto {port}")
-    print(f"Modo debug: {debug}")
+    print("Iniciando Sistema de Tracking CBN...")
+    print(f"Puerto: {port}")
+    print(f"Debug: {debug}")
+    print(f"Base de datos: {app.config['DB_HOST']}")
     print(f"Entorno: {os.environ.get('FLASK_ENV', 'development')}")
 
     print("🚛 Iniciando Sistema de Tracking Completo...")
